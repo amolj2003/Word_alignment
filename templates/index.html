@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Project</title>
+    <link rel="stylesheet" href="styling.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 60px;
+        }
+        .links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .links a{
+            color: #333;
+        }
+        .links :hover{
+            font-weight: bold;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            display: block;
+            width: 5%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .Output{
+            text-align: center;
+            align-items: center;
+        }
+
+        /* Animation */
+        .output li {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Red line */
+        .word-pair {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .original {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            font-size:28px;
+            align-items: center;
+       
+        }
+
+        .lowercase {
+            display: block;
+            font-size: 28px;
+            color: #777;
+            text-align: center;
+            align-items:center;
+            padding:8px;
+            
+        }
+
+        .red-line {
+            position: absolute;
+            width: 2px;
+            height: 30%;
+            background-color: red;
+            top: 30px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Sync</h1>
+        <div class="links">
+            <a href="#">Paper</a> | <a href="#">Code</a>
+        </div>
+        <div class="description">
+            Enter two sentences (paraphrases or translations) in up to two languages to obtain word alignments.
+        </div>
+        <form id="alignmentForm" action="/process" method="post">
+            <div class="input-group">
+                <label for="sentenceA">Sentence A:</label>
+                <input type="text" id="sentenceA" name="sentence1" required>
+            </div>
+            <div class="input-group">
+                <label for="sentenceB">Sentence B:</label>
+                <input type="text" id="sentenceB" name="sentence2" required>
+            </div>
+            <button type="submit" class="submit-btn">Align</button>
+        </form>
+    </div>
+    <br>
+    <br>
+
+    <div class="Output">
+        <ul class="output">
+            {% for original, lowercase in words %}
+                <li class="word-pair">
+                    <span class="original">{{ original }}</span>
+                    <span class="red-line"></span><br>
+                    <span class="lowercase">{{ lowercase }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="font-size:30px;text-align: center;align-items: center;">
+        The sentence is {{probability}}% accurate
+    </div>
+
+    <footer>
+        &copy; 2024 NLP MSE Lab
+    </footer>
+</body>
+</html>
